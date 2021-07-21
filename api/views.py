@@ -25,12 +25,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def get_by_name(self, request, name=None):
 
-        project = self.queryset.filter(name__iexact=name)
+        project = self.queryset.filter(name__iexact=name).first()
 
         if not project:
             return Response({"error": "Project does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.get_serializer(project, many=True)
+        serializer = self.get_serializer(project)
 
         return Response(serializer.data)
 
