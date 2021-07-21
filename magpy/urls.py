@@ -24,5 +24,7 @@ router.register(r'projects', views.ProjectViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/projects/<str:name>/', views.ProjectViewSet.as_view({"get": "get_by_name", "delete": "delete_project"})),
+    path('api/', include(router.urls))
+
 ]
