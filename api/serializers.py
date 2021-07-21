@@ -8,47 +8,49 @@ import requests
 
 
 class PackageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PackageRelease
-        fields = ['name', 'version']
-        extra_kwargs = {'version': {'required': False}}
+	class Meta:
+		model = PackageRelease
+		fields = ['name', 'version']
+		extra_kwargs = {'version': {'required': False}}
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ['name', 'packages']
-        depth = 1
+	class Meta:
+		model = Project
+		fields = ['name', 'packages']
+		depth = 1
 
-    packages = PackageSerializer(many=True)
+	packages = PackageSerializer(many=True)
 
-    @transaction.atomic
-    def create(self, validated_data):
-        # TODO
-        # - Processar os pacotes recebidos
-        # - Persistir informações no banco
-        packages = validated_data['packages']
+	@transaction.atomic
+	def create(self, validated_data):
+		# TODO
+		# - Processar os pacotes recebidos
+		# - Persistir informações no banco
+		packages = validated_data['packages']
 
-        project = Project.objects.get_or_create(name=validated_data['name'])[0]
+		project = Project.objects.get_or_create(name=validated_data['name'])[0]
 
-        for package in packages:
-            package_name = package['name']
-            package_version = package.get('version', None)
+		for package in packages:
 
-            r = requests.get(f"https://pypi.org/pypi/{package_name}/json/")
-            if r.status_code == 404:
-                raise serializers.ValidationError({"error": "One or more packages doesn't exist"})
+			package_name = package['name']
+			package_version = package.get('version', None)
 
-            if not package_version:
-                package_version = r.json()['info']['version']
+			r = requests.get(f"https://pypi.org/pypi/{package_name}/json/")
+			if r.status_code == 404:
+				raise serializers.ValidationError({"error": "One or more packages doesn't exist"})
 
-            r = requests.get(f"https://pypi.org/pypi/{package_name}/{package_version}/json/")
+			package_name = r.json()['info']['name']
 
-            if r.status_code == 404:
-                raise serializers.ValidationError({"error": "One or more packages doesn't exist"})
+			if not package_version:
+				package_version = r.json()['info']['version']
 
-            package_release = PackageRelease.objects\
-                .get_or_create(name=package_name, version=package_version, project=project)[0]
+			r = requests.get(f"https://pypi.org/pypi/{package_name}/{package_version}/json/")
 
-        # return Project(name=validated_data['name'])
-        return project
+			if r.status_code == 404:
+				raise serializers.ValidationError({"error": "One or more packages doesn't exist"})
+
+			package_release = PackageRelease.objects \
+				.get_or_create(name=package_name, version=package_version, project=project)[0]
+
+		return project
