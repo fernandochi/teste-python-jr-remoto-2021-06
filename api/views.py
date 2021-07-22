@@ -14,14 +14,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     lookup_field = "name"
 
-    # def create(self, request, *args, **kwargs):
-    #     r = requests.get('https://pypi.org/pypi/django/10/json/')
-    #
-    #     if r.status_code == 404:
-    #         return Response({"data": "oi"})
-    #
-    #     return Response({"data": r.status_code})
-
     @action(detail=True)
     def get_by_name(self, request, name=None):
 
