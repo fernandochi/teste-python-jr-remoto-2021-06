@@ -1,9 +1,8 @@
-from rest_framework import generics, viewsets, status
+from rest_framework import generics, viewsets, status, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer, StaticHTMLRenderer
 import requests
-
-
 
 from .models import Project
 from .serializers import ProjectSerializer
@@ -36,3 +35,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
         project.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ApiView(views.APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def get(self, request):
+
+        return Response(template_name='index.html')
