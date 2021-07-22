@@ -1,0 +1,101 @@
+openapi: 3.0.2
+info:
+  version: 1.0.0
+  title: Instruct - Magpy
+  contact:
+    email: fernandoluisantos@gmail.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  description: |
+    Uma api para registrar projetos e seus módulos de desenvolvimento,
+    deste modo outros desenvolvedores podem ter acesso ao projeto e seus requisitos.
+    Sendo possível que seja determinada explicitamente qual versão cada módulo está utilizando ou,
+    caso seja a útlima versão, o própri sistema identifica qual seja
+tags:
+  - name: Developers
+    description: Operações que os desenvolvedores podem realizar
+paths:
+  /api/projects:
+    get:
+      tags:
+        - Developers
+      summary: Busca os projetos
+      operationId: projetos
+      description: |
+        Rota para buscar projetos, se for passado parâmetro após, buscará
+        um projeto cuja o nome coincide com o parâmetro passado, se não retornará todos os projetos
+        cadastrados
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: projetoNome
+          description: O nome do projeto a ser procurado
+          required: false
+          type: string
+      responses:
+        200:
+          description: Retorna todos os projeto ou projeto identificado pelo parâmetro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    description: Nome do projeto
+                    type: string
+                    example: Titan
+                  packages:
+                    description: Lista de módulo que são utilizado no desenolvimento
+                    type: object
+                    properties:
+                      name:
+                        descriptiom: Nome do módulo
+                        type: string
+                        example: Django
+                      version:
+                        description: Versão especificada ou ultima versao do modulo
+                        example: 3.2.5
+        404:
+          description: Quando o projeto especificado no parametro nao e encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: Indicador de erro
+                    type: string
+                    example: Project does not exist
+    post:
+      tags:
+        - Developers
+      summary: Criaçao de projetos
+      description: Criação de projetos e seus módulos dependentes, se nenhuma versão for especificada no momento de criação a ultima versao sera usada
+      operationId: criaProjeto
+      parameters:
+        - name: Titan
+          in: body
+          description: O nome do projeto
+          required: true
+          schema:
+            type: string
+        - pakcages: [{ name: Django }, { name: panda, version: 0.1 }]
+          in: body
+          description: Uma lista de módulos do projeto
+          required: true
+          schem:
+            type: object
+      responses:
+        201:
+          description: Projeto criado
+          content:
+            application/json:
+              schema:
+              type: object
+              properties:
+                name:
+                  description: O nome do projeto criado
+                  type: string
+                  example: Titan
