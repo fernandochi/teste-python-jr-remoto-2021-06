@@ -24,7 +24,7 @@ Esta é uma api de teste da Instruct, que funciona guardar informações sobre q
 
 =============================
 
-#### :construction: Projeto em construção :nerd_face:
+#### Projeto concluído
 
 <h3 id='how'>Como utilizar</h3>
 
