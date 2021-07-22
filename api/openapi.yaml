@@ -26,14 +26,11 @@ paths:
         Rota para buscar projetos, se for passado parâmetro após, buscará
         um projeto cuja o nome coincide com o parâmetro passado, se não retornará todos os projetos
         cadastrados
-      produces:
-        - application/json
       parameters:
         - in: query
           name: projetoNome
           description: O nome do projeto a ser procurado
           required: false
-          type: string
       responses:
         200:
           description: Retorna todos os projeto ou projeto identificado pelo parâmetro
@@ -51,7 +48,7 @@ paths:
                     type: object
                     properties:
                       name:
-                        descriptiom: Nome do módulo
+                        description: Nome do módulo
                         type: string
                         example: Django
                       version:
@@ -76,16 +73,16 @@ paths:
       operationId: criaProjeto
       parameters:
         - name: Titan
-          in: body
+          in: params
           description: O nome do projeto
           required: true
           schema:
             type: string
-        - pakcages: [{ name: Django }, { name: panda, version: 0.1 }]
-          in: body
+        - "pakcages": [{ "name": Django }, { "name": panda, version: 0.1 }]
+          in: params
           description: Uma lista de módulos do projeto
           required: true
-          schem:
+          schema:
             type: object
       responses:
         201:
@@ -93,7 +90,6 @@ paths:
           content:
             application/json:
               schema:
-              type: object
               properties:
                 name:
                   description: O nome do projeto criado
