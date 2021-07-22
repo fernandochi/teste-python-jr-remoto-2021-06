@@ -20,6 +20,8 @@ Esta é uma api de teste da Instruct, que funciona guardar informações sobre q
 
 - [Testes](#testes)
 
+- [Tecnologias](#techs)
+
 =============================
 
 #### :construction: Projeto em construção :nerd_face:
@@ -160,3 +162,15 @@ Os testes da aplicação podem ser rodados com o comando `manage.py test`. Estes
 ```
 k6 run -e API_BASE='http://localhost:8000/' tests-open.js
 ```
+
+Cobertura de código = 94%
+
+<h3 id='techs'>Tecnologias</h3>
+
+- [Django](https://docs.djangoproject.com/)
+- [Django rest_framework](https://www.django-rest-framework.org/)
+
+<h2 id='me'>Autor</h2>
+
+[![BADGE](https://img.shields.io/static/v1?label=github&message=Fernandochi&color=181717&style=social&logo=github&link=https://github.com/fernandochi)](https://github.com/fernandochi)
+[![BADGE](https://img.shields.io/static/v1?label=linkedin&message=Fernando&color=0A66C2&style=social&logo=linkedin&link=https://www.linkedin.com/in/fernando-l-santos/)](https://www.linkedin.com/in/fernando-l-santos/)
