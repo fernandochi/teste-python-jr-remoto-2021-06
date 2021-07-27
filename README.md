@@ -28,6 +28,8 @@ Esta é uma api de teste da Instruct, que funciona guardar informações sobre q
 
 <h3 id='how'>Como utilizar</h3>
 
+Este projeto funciona como um lugar para verificar quais são os pacotes utilizados em desenvolvimento de tal projeto. Deste modo caso queira desenvolver um determinado projeto  que seja parecido com outro já cadastrado, você pode ver quais pacotes foram utilizados sem precisar copiar o repositório.
+
 Esta API está hospedada no [Heroku](https://instruct-magpy.herokuapp.com/) para utilização remota.
 
 #### Localmente
